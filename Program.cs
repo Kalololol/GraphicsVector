@@ -1,24 +1,14 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Reflection;
-
-/*Aplikacja jako argument uruchomieniowy powinna przyjąć nazwy plikow *.bmp do przetworzenia
-Aplikacja powinna wykonać algorytm alpha blending na tych dwóch obrazkach i wynikowy obrazek zapisac
-w folderze uruchomienia pod nazwa output.bmp
-Program powinien wczytac dwa zdjecia, utworzyc nowy obiekt ktory nalozy 1sze zdjecie na drugie.
-nowe zdjecie powinno byc przezroczyste oraz trzeba zapisac je w folderze uruchomienia z nazwa output.bmp
-*/
 
 namespace ZadanieRekrutacyjne {
     class Program {
 
         static void Main(string[] args) {
 
-            string adresUrl = Directory.GetCurrentDirectory();
-
-            Image firstPhoto = Image.FromFile(adresUrl + "\\zdj1.bmp");
-            Image secondPhoto = Image.FromFile(adresUrl + "\\zdj2.bmp");
+            Image firstPhoto = Image.FromFile(Directory.GetCurrentDirectory() + "\\zdj1.bmp");
+            Image secondPhoto = Image.FromFile(Directory.GetCurrentDirectory() + "\\zdj2.bmp");
 
             int firstWidth = firstPhoto.Width;
             int firstHeight = firstPhoto.Height;
