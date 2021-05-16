@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3WjDo9npON5Sj+6b3vPOCWAmUnuIp2OHBwtNi1N+nfi54VW4t1sP764AfYMXnOwUzEBemxyTOqx9dXtf55HaNg==",
+  "dgSpecHash": "9EL6cFe1DZIq6lKyVyyw7lm6WRbDay5RUZYE3cCeb5z3vgIZ5bEURqegVWggBPzhCA1YnGpth+vIxdHJFKklRw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Karol\\Desktop\\Projekty\\ZadanieRekrutacyjne\\ZadanieRekrutacyjne.csproj",
+  "projectFilePath": "C:\\Users\\Karol\\Desktop\\Projekty\\GraphicsVector\\ZadanieRekrutacyjne.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Karol\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
     "C:\\Users\\Karol\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",

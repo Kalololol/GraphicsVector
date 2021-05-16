@@ -1,5 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
+using System.Reflection;
 
 /*Aplikacja jako argument uruchomieniowy powinna przyjąć nazwy plikow *.bmp do przetworzenia
 Aplikacja powinna wykonać algorytm alpha blending na tych dwóch obrazkach i wynikowy obrazek zapisac
@@ -13,16 +15,10 @@ namespace ZadanieRekrutacyjne {
 
         static void Main(string[] args) {
 
-            string adressUrl = "C:\\Users\\Karol\\Desktop\\Projekty\\ZadanieRekrutacyjne\\";
+            string adresUrl = Directory.GetCurrentDirectory();
 
-            Image firstPhoto = Image.FromFile(adressUrl + "zdj1.bmp");
-            Image secondPhoto = Image.FromFile(adressUrl + "zdj2.bmp");
-
-            Run(firstPhoto, secondPhoto);
-        }
-
-        static void Run(Image firstPhoto, Image secondPhoto) {
-            string adressUrl = "C:\\Users\\Karol\\Desktop\\Projekty\\ZadanieRekrutacyjne\\";
+            Image firstPhoto = Image.FromFile(adresUrl + "\\zdj1.bmp");
+            Image secondPhoto = Image.FromFile(adresUrl + "\\zdj2.bmp");
 
             int firstWidth = firstPhoto.Width;
             int firstHeight = firstPhoto.Height;
@@ -30,20 +26,15 @@ namespace ZadanieRekrutacyjne {
             int secondWidth = secondPhoto.Width;
             int secondHeight = secondPhoto.Height;
 
-            Bitmap bmPhoto = new Bitmap(firstWidth, firstHeight); //nowa bitmapa, z wymiarami 1sz zdj
-            Graphics grPhoto = Graphics.FromImage(bmPhoto);  // utworzenie bitmapy 1sz zdj
+            Bitmap bmPhoto = new Bitmap(firstWidth, firstHeight);
+            Graphics grPhoto = Graphics.FromImage(bmPhoto);
 
-            grPhoto.DrawImage( firstPhoto, new Rectangle(0, 0, firstWidth, firstHeight), 0, 0, firstWidth, firstHeight, GraphicsUnit.Pixel);
+            grPhoto.DrawImage(firstPhoto, new Rectangle(0, 0, firstWidth, firstHeight), 0, 0, firstWidth, firstHeight, GraphicsUnit.Pixel);
 
-            // Utwórz Bitmap na podstawie wcześniej zmodyfikowanego zdjęcia. Załaduj Bitmap do nowego obiektu Graphic.            
             Bitmap bmTransparent = new Bitmap(bmPhoto);
             bmTransparent.SetResolution(firstPhoto.HorizontalResolution, firstPhoto.VerticalResolution);
             Graphics grTransparent = Graphics.FromImage(bmTransparent);
 
-             /* Aby uzyskać przezroczysty obraz, stosujemy manipulacje kolorami, definiując ImageAttributesobiekt 
-              i ustawiając dwie z jego właściwości. Pierwszym krokiem jest zastąpienie  koloru tła przezroczystym 
-            ( Alpha=0, R=0, G=0, B=0). Aby to zrobić, użyjemy a Colormap i zdefiniujemy a RemapTable. 
-             */
             ImageAttributes imageAttributes = new ImageAttributes();
             ColorMap colorMap = new ColorMap();
 
@@ -52,9 +43,7 @@ namespace ZadanieRekrutacyjne {
 
             imageAttributes.SetRemapTable(remapTable, ColorAdjustType.Bitmap);
 
-            // Druga manipulacja kolorem służy do zmiany krycia obrazu. Odbywa się to poprzez zastosowanie macierzy 5x5, 
-            //  należy ustawić odpowiednie paramety aby osiągnąć zadowalajacy poziom przezroczystosci.                         
-                float[][] colorMatrixElements = {
+            float[][] colorMatrixElements = {
                       new float[] {0.5f,  0.0f,  0.0f,  0.0f, 0.0f},
                       new float[] {0.0f,  0.5f,  0.0f,  0.0f, 0.0f},
                       new float[] {0.0f,  0.0f,  0.5f,  0.0f, 0.0f},
@@ -66,15 +55,14 @@ namespace ZadanieRekrutacyjne {
 
             imageAttributes.SetColorMatrix(wmColorMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
 
-            // Po dodaniu do obiektu imageAttributes obu manipulacji, trzeba nałożyć zdjęcia na siebie.
             int xPos = 0;
             int yPos = 0;
 
-            grTransparent.DrawImage(secondPhoto, new Rectangle(xPos, yPos, secondWidth, secondHeight), 0, 0, secondWidth, secondHeight, GraphicsUnit.Pixel, imageAttributes);            
-           
-            // zastąpienie oryginalnego obrazu nowym Bitmap
+            grTransparent.DrawImage(secondPhoto, new Rectangle(xPos, yPos, secondWidth, secondHeight), 0, 0, secondWidth, secondHeight, GraphicsUnit.Pixel, imageAttributes);
+
             firstPhoto = bmTransparent;
-            firstPhoto.Save(adressUrl + "output.bmp");
+            firstPhoto.Save("output.bmp");
         }
     }
 }
+
